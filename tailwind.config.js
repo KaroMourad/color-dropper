@@ -1,7 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-const plugin = require("tailwindcss/plugin");
-
 export default {
   darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -54,20 +52,10 @@ export default {
           5: "hsl(var(--chart-5))",
         },
       },
+      boxShadow: {
+        canvas: '0 0 0 2px hsl(var(--border))',
+      },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    plugin(({ addUtilities, theme }) => {
-      const newUtilities = {
-        ".bg-radial-dark": {
-          background: `radial-gradient(circle, ${theme("colors.background")} 0, ${theme("colors.foreground")} 100%);`,
-        },
-        ".bg-radial": {
-          background: `radial-gradient(circle, ${theme("colors.foreground")} 0, ${theme("colors.background")} 100%);`,
-        },
-      };
-      addUtilities(newUtilities);
-    }),
-  ],
+  plugins: [require("tailwindcss-animate")],
 };

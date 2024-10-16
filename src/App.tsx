@@ -1,11 +1,13 @@
 import { Suspense } from "react";
-import { Loading } from "./components";
-import RootLayout from "./layouts/RootLayout";
+import { ColorDropper, Loading } from "./components";
+import { RootLayout } from "./layouts/RootLayout";
 
 function App() {
   return (
     <Suspense fallback={<Loading />}>
-      <RootLayout>heloo</RootLayout>
+      <RootLayout>
+        <ColorDropper />
+      </RootLayout>
     </Suspense>
   );
 }
