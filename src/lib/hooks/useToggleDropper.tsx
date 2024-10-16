@@ -10,4 +10,4 @@ const useToggleDropper = () => {
   return { isDropperActive, handleDropperToggle };
 };
 
-export default useToggleDropper;
+export { useToggleDropper };

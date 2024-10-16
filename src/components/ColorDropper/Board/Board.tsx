@@ -1,6 +1,6 @@
-import { BOARD_CONFIG } from "@/lib/configs/board";
-import { BoardProps } from "./Board.types";
 import React from "react";
+import { BOARD_CANVAS_WIDTH, BOARD_CANVAS_HEIGHT } from "@/lib/configs/board";
+import { BoardProps } from "./Board.types";
 
 const Board: React.FC<BoardProps> = ({
   canvasBoardRef,
@@ -11,9 +11,9 @@ const Board: React.FC<BoardProps> = ({
   return (
     <canvas
       ref={canvasBoardRef}
-      className="bg-muted shadow-canvas"
-      width={BOARD_CONFIG.WIDTH}
-      height={BOARD_CONFIG.HEIGHT}
+      className="bg-black shadow-canvas"
+      width={BOARD_CANVAS_WIDTH}
+      height={BOARD_CANVAS_HEIGHT}
       onClick={handleClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}

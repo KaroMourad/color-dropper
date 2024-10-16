@@ -1,40 +1,36 @@
+import { MousePosition } from "@/types/mouse-pos";
 import { rgbToHex } from ".";
-import { DROPPER_CONFIG } from "../configs/dropper";
+import { RECT_COUNT } from "../configs/dropper";
 
 /**
- * Get the colors of the dropper from the canvas in hex format and the mid color of the dropper
+ * Get the colors of the dropper from the canvas in hex format and the center color of the dropper
  * @param canvas  The canvas element
  * @param x  The x coordinate of the dropper
  * @param y  The y coordinate of the dropper
- * @returns The colors of the dropper and the mid color
+ * @returns The colors of the dropper and the center color
  */
 export const getCursorColors = (
   canvas: HTMLCanvasElement,
-  x: number,
-  y: number
+  mousePos: MousePosition
 ): {
   cursorColors: string[];
-  midColor: string;
+  centerColor: string;
 } => {
   const ctx = canvas.getContext("2d", {
     willReadFrequently: true,
   });
-  if (!ctx) return { cursorColors: [], midColor: "" };
+  if (!ctx) return { cursorColors: [], centerColor: "" };
 
-  const rectData = ctx.getImageData(
-    x,
-    y,
-    DROPPER_CONFIG.RECT_COUNT,
-    DROPPER_CONFIG.RECT_COUNT
-  ).data;
+  const { x, y } = mousePos;
+  const rectData = ctx.getImageData(x, y, RECT_COUNT, RECT_COUNT).data;
   const dropperColors = [];
   for (let i = 0; i < rectData.length; i += 4) {
     const hex = rgbToHex(rectData[i], rectData[i + 1], rectData[i + 2]);
     dropperColors.push(hex);
   }
-  const midColor = dropperColors[Math.floor(dropperColors.length / 2)];
+  const centerColor = dropperColors[Math.floor(dropperColors.length / 2)];
   return {
     cursorColors: dropperColors,
-    midColor,
+    centerColor,
   };
 };

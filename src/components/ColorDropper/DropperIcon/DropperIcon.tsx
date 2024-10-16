@@ -16,4 +16,4 @@ const DropperIcon: React.FC<DropperIconProps> = ({ onClick, isActive }) => {
   );
 };
 
-export default DropperIcon;
+export default React.memo(DropperIcon);

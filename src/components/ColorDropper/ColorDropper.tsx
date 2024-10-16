@@ -2,26 +2,25 @@ import React, { useRef } from "react";
 import { DropperIcon } from "./DropperIcon";
 import { ColorInfo } from "./ColorInfo";
 import { ErrorBoundary, ImageUploader } from "..";
-import { EyeDropper } from "./EyeDropper";
 import {
+  useInitDropper,
   useLoadImage,
-  useSetBoardBindings,
-  useSetSelectedColor,
+  useMouseInteractions,
   useToggleDropper,
 } from "@/lib/hooks";
 import { Board } from "./Board";
+import { Dropper } from "./Dropper";
 
 const ColorDropper: React.FC = () => {
   const boardRef = useRef<HTMLCanvasElement | null>(null);
+  const dropperRef = useRef<HTMLCanvasElement | null>(null);
 
   const { onLoad } = useLoadImage(boardRef);
   const { isDropperActive, handleDropperToggle } = useToggleDropper();
-  const { selectedColor, onMousePosChange } = useSetSelectedColor(boardRef);
-  const { mousePos, handleMouseLeave, handleMouseMove } = useSetBoardBindings(
-    boardRef,
-    isDropperActive,
-    onMousePosChange
-  );
+  const { workerRef } = useInitDropper(isDropperActive, dropperRef);
+
+  const { selectedColor, handleMouseLeave, handleMouseMove } =
+    useMouseInteractions(isDropperActive, boardRef, workerRef);
 
   return (
     <ErrorBoundary>
@@ -35,7 +34,6 @@ const ColorDropper: React.FC = () => {
           <ImageUploader onLoad={onLoad} className="ml-4" />
           {selectedColor && <ColorInfo color={selectedColor} />}
         </div>
-
         <div className="relative flex items-center">
           <Board
             canvasBoardRef={boardRef}
@@ -43,7 +41,7 @@ const ColorDropper: React.FC = () => {
             handleMouseMove={handleMouseMove}
             handleMouseLeave={handleMouseLeave}
           />
-          <EyeDropper mousePos={mousePos} />
+          <Dropper dropperRef={dropperRef} />
         </div>
       </div>
     </ErrorBoundary>
