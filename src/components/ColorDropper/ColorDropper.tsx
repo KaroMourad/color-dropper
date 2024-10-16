@@ -4,7 +4,7 @@ import { ColorInfo } from "./ColorInfo";
 import { BOARD_CONFIG } from "@/lib/configs/board";
 import { getDropperColors, getImageDimensions } from "@/lib/utils";
 import { ErrorBoundary, ImageUploader } from "..";
-import DefaultImage from "@/assets/default.jpg";
+import DefaultImage from "/default.jpg";
 import { EyeDropper } from "./EyeDropper";
 
 const ColorDropper: React.FC = () => {
