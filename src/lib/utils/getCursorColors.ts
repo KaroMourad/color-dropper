@@ -2,21 +2,24 @@ import { rgbToHex } from ".";
 import { DROPPER_CONFIG } from "../configs/dropper";
 
 /**
- * Get the colors of the dropper from the canvas
+ * Get the colors of the dropper from the canvas in hex format and the mid color of the dropper
  * @param canvas  The canvas element
  * @param x  The x coordinate of the dropper
  * @param y  The y coordinate of the dropper
- * @returns The colors of the dropper in hex format or undefined if the context is not available
+ * @returns The colors of the dropper and the mid color
  */
-export const getDropperColors = (
+export const getCursorColors = (
   canvas: HTMLCanvasElement,
   x: number,
   y: number
-): string[] | undefined => {
+): {
+  cursorColors: string[];
+  midColor: string;
+} => {
   const ctx = canvas.getContext("2d", {
     willReadFrequently: true,
   });
-  if (!ctx) return;
+  if (!ctx) return { cursorColors: [], midColor: "" };
 
   const rectData = ctx.getImageData(
     x,
@@ -24,10 +27,14 @@ export const getDropperColors = (
     DROPPER_CONFIG.RECT_COUNT,
     DROPPER_CONFIG.RECT_COUNT
   ).data;
-  const hexColors = [];
+  const dropperColors = [];
   for (let i = 0; i < rectData.length; i += 4) {
     const hex = rgbToHex(rectData[i], rectData[i + 1], rectData[i + 2]);
-    hexColors.push(hex);
+    dropperColors.push(hex);
   }
-  return hexColors;
+  const midColor = dropperColors[Math.floor(dropperColors.length / 2)];
+  return {
+    cursorColors: dropperColors,
+    midColor,
+  };
 };
