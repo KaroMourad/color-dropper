@@ -17,8 +17,7 @@ const ColorInfo: React.FC<ColorInfoProps> = ({ color }) => {
   };
 
   return (
-    <div className="inline-flex items-center">
-      <span className="mr-2">Selected Color:</span>
+    <div className="inline-flex">
       <Button
         variant="outline"
         style={{

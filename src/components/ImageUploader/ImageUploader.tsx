@@ -25,10 +25,11 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onLoad, className }) => {
     }
   };
 
+
   return (
-    <div className={cn("mr-auto", className)}>
+    <div className={cn("mr-auto relative pb-4", className)}>
       <input type="file" accept="image/*" onChange={loadImage} />
-      {error && <p className="text-sm text-red-500">{error.message}</p>}
+      {error && <p className="text-sm text-red-500 absolute ">{error.message}</p>}
     </div>
   );
 };

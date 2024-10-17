@@ -8,6 +8,8 @@ const Board: React.FC<BoardProps> = ({
   isDropperActive,
   handleMouseMove,
   handleMouseLeave,
+  handleClick,
+  handleTouchMove,
 }) => {
   return (
     <canvas
@@ -17,8 +19,11 @@ const Board: React.FC<BoardProps> = ({
       })}
       width={BOARD_CANVAS_WIDTH}
       height={BOARD_CANVAS_HEIGHT}
+      onTouchMove={handleTouchMove}
       onMouseMove={handleMouseMove}
+      onTouchEnd={handleMouseLeave}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
     />
   );
 };

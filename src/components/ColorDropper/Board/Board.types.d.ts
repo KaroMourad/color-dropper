@@ -5,4 +5,6 @@ export interface BoardProps {
   isDropperActive: boolean;
   handleMouseMove: (event: React.MouseEvent<HTMLCanvasElement>) => void;
   handleMouseLeave: () => void;
+  handleClick: (event: React.MouseEvent<HTMLCanvasElement>) => void;
+  handleTouchMove: (event: React.TouchEvent<HTMLCanvasElement>) => void;
 }
