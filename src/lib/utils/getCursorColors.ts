@@ -1,6 +1,6 @@
 import { MousePosition } from "@/types/mouse-pos";
 import { rgbToHex } from ".";
-import { GLASS_HEIGHT, GLASS_WIDTH, RECT_LINE_WIDTH, RECT_SIZE } from "../configs/dropper";
+import { GLASS_HEIGHT, GLASS_WIDTH, RECT_SIZE } from "../configs/dropper";
 
 /**
  * Get the colors of the dropper from the canvas in hex format and the center color of the dropper
@@ -22,10 +22,17 @@ export const getCursorColors = (
   if (!ctx) return { cursorColors: [], centerColor: "" };
 
   const { x, y } = mousePos;
-  const glassSize = {
-    width: GLASS_WIDTH / RECT_SIZE + RECT_LINE_WIDTH,
-    height: GLASS_HEIGHT / RECT_SIZE + RECT_LINE_WIDTH
-  }; 
+  let glassSize = {
+    width: Math.round(GLASS_WIDTH / RECT_SIZE),
+    height: Math.round(GLASS_HEIGHT / RECT_SIZE),
+  };
+
+  if (glassSize.width % 2 === 0) {
+    glassSize.width += 1;
+  }
+  if (glassSize.height % 2 === 0) {
+    glassSize.height += 1;
+  }
   const imgData = ctx.getImageData(
     x - glassSize.width / 2,
     y - glassSize.height / 2,
@@ -38,7 +45,7 @@ export const getCursorColors = (
     const hex = rgbToHex(rectData[i], rectData[i + 1], rectData[i + 2]);
     dropperColors.push(hex);
   }
-  const centerColor = dropperColors[Math.ceil(dropperColors.length / 2)];
+  const centerColor = dropperColors[Math.floor(dropperColors.length / 2)];
   return {
     cursorColors: dropperColors,
     centerColor,

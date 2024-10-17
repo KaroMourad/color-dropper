@@ -70,18 +70,20 @@ class Cursor {
   private drawGrid(cursorColors: string[]) {
     if (this.ctx) {
       this.ctx.beginPath();
-      const drawSize = this.radius + this.borderWidth / 2;
       const rectsPerRow = Math.ceil(Math.sqrt(cursorColors.length));
-      const rows = Math.ceil(cursorColors.length / rectsPerRow);
-      const startX = this.x - drawSize;
-      const startY = this.y - drawSize;
+      const rows = Math.floor(cursorColors.length / rectsPerRow);
+      const startX = this.x - this.radius - this.rectSize / 2;
+      const startY = this.y - this.radius - this.rectSize / 2;
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < rectsPerRow; col++) {
           const color = cursorColors[row * rectsPerRow + col];
           if (color) {
             const x = startX + col * this.rectSize;
             const y = startY + row * this.rectSize;
-            const size = Math.sqrt((x - this.x) ** 2 + (y - this.y) ** 2);
+            const size = Math.hypot(
+              this.x - this.rectSize / 2 - x,
+              this.y - this.rectSize / 2 - y
+            );
             if (size <= this.radius) {
               this.ctx.fillStyle = color;
               this.ctx.fillRect(x, y, this.rectSize, this.rectSize);
@@ -115,7 +117,7 @@ class Cursor {
       const centerY = this.y - this.rectSize / 2;
       this.ctx.beginPath();
       this.ctx.strokeStyle = this.centerSquareColor;
-      this.ctx.lineWidth = 1;
+      this.ctx.lineWidth = this.rectLineWidth;
       this.ctx.strokeRect(centerX, centerY, this.rectSize, this.rectSize);
       this.ctx.closePath();
     }
