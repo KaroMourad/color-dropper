@@ -6,6 +6,7 @@ import {
   BORDER_INNER_WIDTH,
   BORDER_INNER,
   RECT_SIZE,
+  RECT_LINE_WIDTH,
   STROKE_COLOR,
   INNER_STROKE_COLOR,
   OUTER_STROKE_COLOR,
@@ -19,6 +20,7 @@ class Cursor {
   private readonly borderInnerWidth = BORDER_INNER_WIDTH;
   private readonly borderInner = BORDER_INNER;
   private readonly rectSize = RECT_SIZE;
+  private readonly rectLineWidth = RECT_LINE_WIDTH;
   private readonly strokeColor = STROKE_COLOR;
   private readonly innerStrokeColor = INNER_STROKE_COLOR;
   private readonly outerStrokeColor = OUTER_STROKE_COLOR;
@@ -65,26 +67,17 @@ class Cursor {
     this.drawArc(borderOuter, this.outerStrokeColor, this.borderOuterWidth);
   }
 
-  private drawBall(color: string, cursorColors: string[]) {
+  private drawGrid(cursorColors: string[]) {
     if (this.ctx) {
       this.ctx.beginPath();
-      const drawSize = (this.radius + this.borderWidth / 2);
-
-
+      const drawSize = this.radius + this.borderWidth / 2;
       const rectsPerRow = Math.ceil(Math.sqrt(cursorColors.length));
       const rows = Math.ceil(cursorColors.length / rectsPerRow);
-
       const startX = this.x - drawSize;
       const startY = this.y - drawSize;
-
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < rectsPerRow; col++) {
-          const color = this.getAverageColor(
-            cursorColors,
-            row,
-            col,
-            rectsPerRow
-          );
+          const color = cursorColors[row * rectsPerRow + col];
           if (color) {
             const x = startX + col * this.rectSize;
             const y = startY + row * this.rectSize;
@@ -93,18 +86,22 @@ class Cursor {
               this.ctx.fillStyle = color;
               this.ctx.fillRect(x, y, this.rectSize, this.rectSize);
               this.ctx.strokeStyle = this.strokeColor;
-              this.ctx.lineWidth = 1;
+              this.ctx.lineWidth = this.rectLineWidth;
               this.ctx.strokeRect(x, y, this.rectSize, this.rectSize);
             }
           }
         }
       }
-
       this.ctx.closePath();
+    }
+  }
 
+  private drawBall(color: string, cursorColors: string[]) {
+    if (this.ctx) {
+      // Draw grid
+      this.drawGrid(cursorColors);
       // Draw center square
       this.drawCenterSquare();
-
       // Draw borders
       this.drawInnerBorder();
       this.drawMiddleBorder(color);
@@ -124,56 +121,6 @@ class Cursor {
     }
   }
 
-  private getAverageColor(
-    cursorColors: string[],
-    row: number,
-    col: number,
-    rectsPerRow: number
-  ): string | null {
-    const pixels = [];
-    const start = row * rectsPerRow + col;
-    const end = start + 1;
-    for (let i = start; i < end; i++) {
-      if (cursorColors[i]) {
-        pixels.push(this.hexToRgb(cursorColors[i]));
-      }
-    }
-
-    if (pixels.length === 0) return null;
-
-    // Average RGB values
-    const avgRgb = pixels.reduce(
-      (acc, color) => {
-        acc.r += color.r;
-        acc.g += color.g;
-        acc.b += color.b;
-        return acc;
-      },
-      { r: 0, g: 0, b: 0 }
-    );
-
-    avgRgb.r = Math.round(avgRgb.r / pixels.length);
-    avgRgb.g = Math.round(avgRgb.g / pixels.length);
-    avgRgb.b = Math.round(avgRgb.b / pixels.length);
-
-    return this.rgbToHex(avgRgb.r, avgRgb.g, avgRgb.b);
-  }
-
-  private hexToRgb(hex: string): { r: number; g: number; b: number } {
-    const bigint = parseInt(hex.slice(1), 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    return { r, g, b };
-  }
-
-  private rgbToHex(r: number, g: number, b: number): string {
-    return `#${((1 << 24) + (r << 16) + (g << 8) + b)
-      .toString(16)
-      .slice(1)
-      .toUpperCase()}`;
-  }
-
   clear() {
     if (this.ctx) {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -183,7 +130,6 @@ class Cursor {
   draw(color: string, cursorColors: string[], x: number, y: number) {
     this.clear();
     this.drawBall(color, cursorColors);
-    debugger;
     this.x = x;
     this.y = y;
   }

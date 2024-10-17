@@ -37,7 +37,7 @@ const ColorDropper: React.FC = () => {
         <div className="relative flex items-center">
           <Board
             canvasBoardRef={boardRef}
-            handleClick={handleDropperToggle}
+            isDropperActive={isDropperActive}
             handleMouseMove={handleMouseMove}
             handleMouseLeave={handleMouseLeave}
           />

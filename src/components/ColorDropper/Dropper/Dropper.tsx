@@ -11,7 +11,7 @@ interface DropperProps {
 const Dropper: React.FC<DropperProps> = ({ dropperRef }) => {
   return (
     <canvas
-      className="absolute pointer-events-none"
+      className="absolute pointer-events-none cursor-none"
       ref={dropperRef}
       width={DROPPER_CANVAS_WIDTH}
       height={DROPPER_CANVAS_HEIGHT}
