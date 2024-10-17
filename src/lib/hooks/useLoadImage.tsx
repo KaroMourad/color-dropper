@@ -14,6 +14,7 @@ const useLoadImage = (
       const { width, height } = getImageDimensions(canvas, img);
       // Clear the canvas before drawing
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       // Draw the image at the center of the canvas
       ctx.drawImage(
         img,
@@ -22,6 +23,8 @@ const useLoadImage = (
         width,
         height
       );
+
+
     },
     [canvasRef]
   );
