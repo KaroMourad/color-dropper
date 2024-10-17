@@ -1,12 +1,14 @@
 import { useCallback, useState } from "react";
-import { copyToClipboard, getCursorColors } from "../utils";
+import { copyToClipboard, getCursorColors } from "../lib/utils";
 import { MousePosition } from "@/types/mouse-pos";
+import { useToast } from "@/hooks/use-toast";
 
 const useMouseInteractions = (
   isDropperActive: boolean,
   boardRef: React.MutableRefObject<HTMLCanvasElement | null>,
   workerRef: React.MutableRefObject<Worker | null>
 ) => {
+  const { toast } = useToast();
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
 
   const updateData = useCallback(
@@ -60,7 +62,10 @@ const useMouseInteractions = (
   const handleClick = useCallback(() => {
     if (!selectedColor) return;
     copyToClipboard(selectedColor).then(() => {
-      alert("Color copied to clipboard!");
+      toast({
+        title: `Color ${selectedColor} copied to clipboard`,
+        variant: "default",
+      });
     });
   }, [selectedColor]);
 

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { ColorDropper, Loading } from "./components";
 import { RootLayout } from "./layouts/RootLayout";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <RootLayout>
         <ColorDropper />
       </RootLayout>
+      <Toaster />
     </Suspense>
   );
 }

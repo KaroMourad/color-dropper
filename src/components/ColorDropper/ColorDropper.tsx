@@ -7,7 +7,7 @@ import {
   useLoadImage,
   useMouseInteractions,
   useToggleDropper,
-} from "@/lib/hooks";
+} from "@/hooks";
 import { Board } from "./Board";
 import { Dropper } from "./Dropper";
 

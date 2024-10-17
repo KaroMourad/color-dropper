@@ -3,12 +3,18 @@ import { copyToClipboard, getHighContrastColor } from "@/lib/utils";
 import React from "react";
 import { Copy, CopyCheck } from "lucide-react";
 import { ColorInfoProps } from "./ColorInfo.types";
+import { useToast } from "@/hooks/use-toast";
 
 const ColorInfo: React.FC<ColorInfoProps> = ({ color }) => {
+  const { toast } = useToast();
   const [isCopied, setIsCopied] = React.useState(false);
 
   const onCopyColor = () => {
     copyToClipboard(color).then(() => {
+      toast({
+        title: `Color ${color} copied to clipboard`,
+        variant: "default",
+      });
       setIsCopied(true);
       setTimeout(() => {
         setIsCopied(false);

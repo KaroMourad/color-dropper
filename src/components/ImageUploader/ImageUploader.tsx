@@ -1,13 +1,14 @@
 import { adaptError, cn } from "@/lib/utils";
 import { useState } from "react";
 import { ImageUploaderProps } from "./ImageUploader.types";
+import { useToast } from "@/hooks/use-toast";
+import { Input } from "../ui/input";
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onLoad, className }) => {
-  const [error, setError] = useState<Error | null>(null);
+  const { toast } = useToast();
 
   const loadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
-      setError(null);
       const file = e.target.files?.[0];
       if (!file) throw new Error("No file selected");
 
@@ -21,16 +22,17 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onLoad, className }) => {
       };
       reader.readAsDataURL(file);
     } catch (error) {
-      setError(new Error(adaptError(error).message));
+      toast({
+        title: adaptError(error).message,
+        variant: "destructive",
+      });
     }
   };
 
-
   return (
-    <div className={cn("mr-auto relative pb-4", className)}>
-      <input type="file" accept="image/*" onChange={loadImage} />
-      {error && <p className="text-sm text-red-500 absolute ">{error.message}</p>}
-    </div>
+    <div className={cn("mr-auto relative", className)}>
+      <Input type="file" accept="image/*" onChange={loadImage} />
+    </div> 
   );
 };
 
