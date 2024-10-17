@@ -2,14 +2,15 @@ import React, { useRef } from "react";
 import { DropperIcon } from "./DropperIcon";
 import { ColorInfo } from "./ColorInfo";
 import { ErrorBoundary, ImageUploader } from "..";
+
+import { Board } from "./Board";
+import { Dropper } from "./Dropper";
 import {
   useInitDropper,
   useLoadImage,
   useMouseInteractions,
   useToggleDropper,
 } from "@/hooks";
-import { Board } from "./Board";
-import { Dropper } from "./Dropper";
 
 const ColorDropper: React.FC = () => {
   const boardRef = useRef<HTMLCanvasElement | null>(null);

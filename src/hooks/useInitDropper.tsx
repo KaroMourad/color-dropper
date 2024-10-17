@@ -9,7 +9,7 @@ const useInitDropper = (
   useEffect(() => {
     if (!isDropperActive || !dropperRef.current || workerRef.current) return;
     workerRef.current = new Worker(
-      new URL("../worker/cursorWorker.ts", import.meta.url),
+      new URL("../lib/worker/cursorWorker.ts", import.meta.url),
       {
         type: "module",
       }

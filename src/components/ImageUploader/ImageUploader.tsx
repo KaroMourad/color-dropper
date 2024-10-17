@@ -1,5 +1,4 @@
 import { adaptError, cn } from "@/lib/utils";
-import { useState } from "react";
 import { ImageUploaderProps } from "./ImageUploader.types";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "../ui/input";
