@@ -7,6 +7,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onLoad, className }) => {
 
   const loadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
+      setError(null);
       const file = e.target.files?.[0];
       if (!file) throw new Error("No file selected");
 
