@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { copyToClipboard, getHighContrastColor } from "@/lib/utils";
+import { cn, copyToClipboard, getHighContrastColor } from "@/lib/utils";
 import React from "react";
 import { Copy, CopyCheck } from "lucide-react";
 import { ColorInfoProps } from "./ColorInfo.types";
 import { useToast } from "@/hooks";
 
-const ColorInfo: React.FC<ColorInfoProps> = ({ color }) => {
+const ColorInfo: React.FC<ColorInfoProps> = ({ color, className }) => {
   const { toast } = useToast();
   const [isCopied, setIsCopied] = React.useState(false);
 
@@ -23,7 +23,7 @@ const ColorInfo: React.FC<ColorInfoProps> = ({ color }) => {
   };
 
   return (
-    <div className="inline-flex">
+    <div className={cn("inline-flex", className)}>
       <Button
         variant="outline"
         style={{

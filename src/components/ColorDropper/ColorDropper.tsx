@@ -38,7 +38,7 @@ const ColorDropper: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <div className="flex flex-col w-full flex-1 items-center h-dvh">
+      <div className="flex flex-col w-full flex-1 items-center h-dvh overflow-hidden">
         <h1 className="text-2xl mb-4">Color Dropper App</h1>
         <div className="flex w-full mb-2 h-12">
           <DropperIcon
@@ -46,7 +46,7 @@ const ColorDropper: React.FC = () => {
             isActive={isDropperActive}
           />
           <ImageUploader onLoad={onLoad} className="ml-4" />
-          {selectedColor && <ColorInfo color={selectedColor} />}
+          {selectedColor && <ColorInfo color={selectedColor} className="ml-4" />}
         </div>
         <div
           ref={containerRef}
