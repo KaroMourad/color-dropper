@@ -1,6 +1,6 @@
 import { adaptError, cn } from "@/lib/utils";
 import { ImageUploaderProps } from "./ImageUploader.types";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks";
 import { Input } from "../ui/input";
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onLoad, className }) => {
@@ -29,9 +29,9 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onLoad, className }) => {
   };
 
   return (
-    <div className={cn("mr-auto relative", className)}>
+    <div className={cn("mr-auto relative max-w-[240px]", className)}>
       <Input type="file" accept="image/*" onChange={loadImage} />
-    </div> 
+    </div>
   );
 };
 

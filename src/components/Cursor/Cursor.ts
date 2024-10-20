@@ -34,6 +34,8 @@ class Cursor {
     if (canvas) {
       this.canvas = canvas;
       this.ctx = canvas.getContext("2d", { willReadFrequently: true });
+      this.x = canvas.width / 2;
+      this.y = canvas.height / 2;
     } else {
       throw Error("Canvas is Required");
     }
@@ -134,6 +136,13 @@ class Cursor {
     this.drawBall(color, cursorColors);
     this.x = x;
     this.y = y;
+  }
+
+  resize(width: number, height: number) {
+    this.canvas.width = width;
+    this.canvas.height = height;
+    this.x = width / 2;
+    this.y = height / 2;
   }
 }
 

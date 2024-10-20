@@ -22,7 +22,7 @@ export const getCursorColors = (
   if (!ctx) return { cursorColors: [], centerColor: "" };
 
   const { x, y } = mousePos;
-  let glassSize = {
+  const glassSize = {
     width: Math.round(GLASS_WIDTH / RECT_SIZE),
     height: Math.round(GLASS_HEIGHT / RECT_SIZE),
   };

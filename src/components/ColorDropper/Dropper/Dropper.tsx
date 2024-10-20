@@ -1,20 +1,21 @@
-import {
-  DROPPER_CANVAS_HEIGHT,
-  DROPPER_CANVAS_WIDTH,
-} from "@/lib/configs/dropper";
 import React from "react";
+import { DropperProps } from "./Dropper.types";
+import { cn } from "@/lib/utils";
+import {
+  DROPPER_INITIAL_HEIGHT,
+  DROPPER_INITIAL_WIDTH,
+} from "@/lib/configs/dropper";
 
-interface DropperProps {
-  dropperRef: React.MutableRefObject<HTMLCanvasElement | null>;
-}
-
-const Dropper: React.FC<DropperProps> = ({ dropperRef }) => {
+const Dropper: React.FC<DropperProps> = ({ dropperRef, className = "" }) => {
   return (
     <canvas
-      className="absolute pointer-events-none cursor-none"
+      className={cn(
+        "bg-transparent pointer-events-none cursor-none",
+        className
+      )}
       ref={dropperRef}
-      width={DROPPER_CANVAS_WIDTH}
-      height={DROPPER_CANVAS_HEIGHT}
+      width={DROPPER_INITIAL_WIDTH}
+      height={DROPPER_INITIAL_HEIGHT}
     />
   );
 };

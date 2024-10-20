@@ -19,6 +19,10 @@ class CursorManager {
     }
   }
 
+  public resize(width: number, height: number) {
+    this.cursor?.resize(width, height);
+  }
+
   public clear() {
     this.cursor?.clear();
   }

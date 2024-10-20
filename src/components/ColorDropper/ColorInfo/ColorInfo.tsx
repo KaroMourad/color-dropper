@@ -3,7 +3,7 @@ import { copyToClipboard, getHighContrastColor } from "@/lib/utils";
 import React from "react";
 import { Copy, CopyCheck } from "lucide-react";
 import { ColorInfoProps } from "./ColorInfo.types";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks";
 
 const ColorInfo: React.FC<ColorInfoProps> = ({ color }) => {
   const { toast } = useToast();
